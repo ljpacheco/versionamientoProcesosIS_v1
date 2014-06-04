@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,7 +34,22 @@ public class Versionamiento_PIS {
     // Metodos -  Crear y escribir archivos con datos personales
     static String ruta="C:\\Users\\katty-henrry\\Desktop\\DatosPersonales.txt";
      public static void main(String[] args) throws IOException {
-         File archivo = new File(ruta);
+         int opcion=0;
+         Scanner lector = new Scanner(System.in);
+        opcion = Integer.parseInt(JOptionPane.showInputDialog("Ingresa una opción \n 1. -- Crear archivo -- \n 2. -- Leer archivo --"));
+         switch(opcion) {
+         case 1: 
+             EscribirArchivo();
+             break;
+         case 2: 
+             LeerArchivo();
+             break;
+         }
+         
+      } 
+      // Metodos -  Escribir 
+     public static void EscribirArchivo() throws IOException{
+        File archivo = new File(ruta);
          if (!archivo.exists()) {
              BufferedWriter escribir = new BufferedWriter(new FileWriter(ruta));
              escribir.write("************ DATOS PERSONALES ************" + "\n" );
@@ -45,9 +60,30 @@ public class Versionamiento_PIS {
              escribir.write("Carrera/Titulacion: " + carrera + "\n");
              escribir.write("Ciclo: " + ciclo + "\n" );
              escribir.close();
+             
+             System.out.println("El archivo se ha creado con exito.. :D");
          }else{
              System.out.println("El archivo ya se encuentra creado, cambie el nombre o la ruta");
           
          }
-      }      
     }
+     // Metodos -  leer
+      public static void LeerArchivo(){
+         BufferedReader leer = null;
+ 		try {
+ 			String Linea;
+ 			leer = new BufferedReader(new FileReader(ruta));
+ 			while ((Linea = leer.readLine()) != null) { 
+                             System.out.println(Linea); 
+ 			}
+ 		} catch (IOException e) {
+ 			e.printStackTrace();
+ 		} finally {
+ 			try {
+ 				if (leer != null)leer.close();
+ 			} catch (IOException ex) {
+ 				ex.printStackTrace();
+ 			}
+ 		}
+     }
+ } 
